@@ -8,9 +8,12 @@
                           [danielsz/boot-environ "0.0.1"]
 
                           ;; backend
+                          [org.clojure/tools.namespace "0.2.10"]
                           [org.clojure/clojure "1.7.0-beta2"]
                           [org.immutant/immutant "2.0.0"]
                           [ring/ring-defaults "0.1.4"]
+                          [metosin/ring-http-response "0.5.2"]
+                          [ring/ring-devel "1.3.2"]
                           [compojure "1.3.3"]
                           [environ "1.0.0"]
 
@@ -26,7 +29,8 @@
 (require '[adzerk.boot-cljs :refer [cljs]]
          '[adzerk.boot-reload :refer [reload]]
          '[deraen.boot-less :refer [less]]
-         '[danielsz.boot-environ :refer [environ]])
+         '[danielsz.boot-environ :refer [environ]]
+         '[clj-blog.boot :refer :all])
 
 (task-options!
  cljs {:compiler-options
@@ -50,5 +54,6 @@
    (environ :env {:dev true})
    (watch)
    (wrap-less)
-   (cljs :optimizations :none :unified-mode true)))
+   ;; (cljs :optimizations :none :unified-mode true)
+   (start-app :port 3000 :reload true)))
 
