@@ -1,0 +1,2 @@
+{:require [clj-blog.core]
+ :init-fns [clj-blog.core/start!]}

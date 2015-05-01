@@ -1,5 +1,6 @@
 (ns clj-blog.server
-  (:require [compojure.core :refer :all]
+  (:require [clj-blog.routes.home :refer [home-routes]]
+            [compojure.core :refer :all]
             [compojure.route :as route]
             [environ.core :refer [env]]
             [immutant.web :as web]
@@ -8,12 +9,14 @@
             [ring.middleware.reload :refer [wrap-reload]]
             [ring.util.http-response :refer [ok content-type]]))
 
-(defroutes all-routes
-  ;; (route/resources "/js" {:root "js"})
-  ;; (route/resources "/css" {:root "css"})
+(defroutes base-routes
+  (route/resources "/js" {:root "js"})
+  (route/resources "/css" {:root "css"}))
 
-  (GET "/" []
-    (-> (ok "Hello, world") (content-type "text/plain"))))
+(def all-routes
+  (routes
+   home-routes
+   base-routes))
 
 (defn stop
   [{:keys [immutant-server] :as ctx}]
